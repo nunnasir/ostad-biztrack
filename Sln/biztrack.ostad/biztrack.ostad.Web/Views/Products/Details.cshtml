@@ -1,0 +1,53 @@
+@model ProductDetailResponse
+@{
+    ViewData["Title"] = Model?.Name ?? "Product";
+}
+
+@if (Model == null) { return; }
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@Model.Name</h2>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+        <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-outline-danger">Delete</a>
+    </div>
+</div>
+
+<dl class="row">
+    <dt class="col-sm-2">Code</dt>
+    <dd class="col-sm-10">@(Model.Code ?? "-")</dd>
+
+    <dt class="col-sm-2">Description</dt>
+    <dd class="col-sm-10">@(Model.Description ?? "-")</dd>
+
+    <dt class="col-sm-2">Unit</dt>
+    <dd class="col-sm-10">@(Model.Unit ?? "-")</dd>
+
+    <dt class="col-sm-2">Low stock threshold</dt>
+    <dd class="col-sm-10">@(Model.LowStockThreshold?.ToString() ?? "-")</dd>
+
+    <dt class="col-sm-2">Total stock</dt>
+    <dd class="col-sm-10">
+        <strong>@Model.TotalStock.ToString("N2")</strong>
+        @if (Model.IsLowStock) { <span class="badge bg-warning">Low Stock</span> }
+    </dd>
+
+    <dt class="col-sm-2">Status</dt>
+    <dd class="col-sm-10">@(Model.IsActive ? "Active" : "Inactive")</dd>
+</dl>
+
+@if (Model.StockByWarehouse != null && Model.StockByWarehouse.Count > 0)
+{
+    <h4>Stock by warehouse</h4>
+    <table class="table table-sm">
+        <thead><tr><th>Warehouse</th><th>Quantity</th></tr></thead>
+        <tbody>
+            @foreach (var s in Model.StockByWarehouse)
+            {
+                <tr><td>@s.WarehouseName</td><td>@s.Quantity.ToString("N2")</td></tr>
+            }
+        </tbody>
+    </table>
+}
+
+<p><a asp-action="Index">&laquo; Back to list</a></p>

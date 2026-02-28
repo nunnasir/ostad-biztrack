@@ -33,6 +33,10 @@ public static class DependencyInjection
             .AddDefaultTokenProviders();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IProductRepository, ProductRepository>();
+        services.AddScoped<IWarehouseRepository, WarehouseRepository>();
+        services.AddScoped<IStockRepository, StockRepository>();
+        services.AddScoped<IStockMovementRepository, StockMovementRepository>();
 
         return services;
     }

@@ -12,6 +12,11 @@ public class BizTrackDbContext : IdentityDbContext<ApplicationUser, IdentityRole
     {
     }
 
+    public DbSet<Product> Products => Set<Product>();
+    public DbSet<Warehouse> Warehouses => Set<Warehouse>();
+    public DbSet<Stock> Stocks => Set<Stock>();
+    public DbSet<StockMovement> StockMovements => Set<StockMovement>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);

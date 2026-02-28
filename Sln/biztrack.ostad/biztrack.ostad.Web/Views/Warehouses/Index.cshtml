@@ -1,0 +1,48 @@
+@model IReadOnlyList<WarehouseListResponse>
+@{
+    ViewData["Title"] = "Warehouses";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Warehouses</h2>
+    <a asp-action="Create" class="btn btn-primary">Add Warehouse</a>
+</div>
+
+<form method="get" class="mb-3">
+    <div class="form-check">
+        <input type="checkbox" name="activeOnly" value="true" class="form-check-input" id="activeOnly" @(ViewContext.HttpContext.Request.Query["activeOnly"] == "True" ? "checked" : "") />
+        <label class="form-check-label" for="activeOnly">Active only</label>
+    </div>
+    <button type="submit" class="btn btn-sm btn-secondary mt-1">Filter</button>
+</form>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Code</th>
+            <th>Address</th>
+            <th>Status</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.Code</td>
+                    <td>@(item.Address ?? "-")</td>
+                    <td>@(item.IsActive ? "Active" : "Inactive")</td>
+                    <td><a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Edit</a></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5" class="text-center text-muted">No warehouses yet. <a asp-action="Create">Create one</a>.</td></tr>
+        }
+    </tbody>
+</table>

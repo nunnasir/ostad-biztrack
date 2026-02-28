@@ -31,7 +31,10 @@ public class Repository<TEntity, TKey> : IRepository<TEntity, TKey>
     {
         IQueryable<TEntity> query = tracking ? DbSet.AsTracking() : DbSet.AsNoTracking();
         if (!string.IsNullOrWhiteSpace(include))
-            query = query.Include(include);
+        {
+            foreach (var nav in include.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+                query = query.Include(nav);
+        }
         if (predicate != null)
             query = query.Where(predicate);
         if (orderBy != null)

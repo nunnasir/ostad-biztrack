@@ -1,0 +1,41 @@
+@model IReadOnlyList<LowStockAlertResponse>
+@{
+    ViewData["Title"] = "Low Stock Alerts";
+}
+
+<h2>Low Stock Alerts</h2>
+<p class="text-muted">Products at or below their low stock threshold.</p>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Code</th>
+            <th>Current Stock</th>
+            <th>Threshold</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Count > 0)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a asp-controller="Products" asp-action="Details" asp-route-id="@item.ProductId">@item.ProductName</a></td>
+                    <td>@item.ProductCode</td>
+                    <td><strong class="text-warning">@item.CurrentStock.ToString("N2")</strong></td>
+                    <td>@(item.LowStockThreshold?.ToString() ?? "-")</td>
+                    <td><a asp-controller="Products" asp-action="Edit" asp-route-id="@item.ProductId" class="btn btn-sm btn-outline-primary">Edit</a></td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr><td colspan="5" class="text-center text-muted">No low stock alerts.</td></tr>
+        }
+    </tbody>
+</table>
+
+<p><a asp-controller="Products" asp-action="Index">&laquo; Back to Products</a></p>

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using biztrack.ostad.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using biztrack.ostad.Infrastructure.Data;
 namespace biztrack.ostad.Infrastructure.Migrations
 {
     [DbContext(typeof(BizTrackDbContext))]
-    partial class BizTrackDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260228180023_AddProductAndInventory")]
+    partial class AddProductAndInventory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

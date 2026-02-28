@@ -12,6 +12,8 @@ public static class DependencyInjection
     {
         services.AddBizTrackInfrastructure(configuration);
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IProductService, ProductService>();
+        services.AddScoped<IWarehouseService, WarehouseService>();
         return services;
     }
 }
